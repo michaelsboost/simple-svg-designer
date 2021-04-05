@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>simple svg designer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <script src="libraries/jquery/jquery.js"></script>
+    <script src="libraries/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="libraries/fabric/fabric.min.js"></script>
+    <script src="libraries/filesaver/FileSaver.js"></script>
+    <script src="libraries/filesaver/Blob.js"></script>
+  </head>
+  <body>
+    <div class="fullpage">
+      <div class="section">
+      <input type="file" accept="image/svg+xml" onchange="upload(event)"><br><br>
+
+      <a class="thmb" href="#" onclick="enableSelection()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Selection</a>
+      <a class="thmb" href="#" onclick="enableFreeDrawing()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Drawing</a>
+      <a class="thmb" href="#" onclick="drawLine()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Line</a>
+      <a class="thmb" href="#" onclick="drawRect()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Rectangle</a>
+      <a class="thmb" href="#" onclick="drawCircle()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Circle</a>
+      <a class="thmb" href="#" onclick="drawEllipse()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Ellipse</a>
+      <a class="thmb" href="#" onclick="drawTriangle()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Triangle</a>
+      <a class="thmb" href="#" onclick="drawText()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Text</a><br><br>
+        
+      <a class="thmb" id="undo" href="#" onclick="undo()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Undo</a>
+      <a class="thmb" id="redo" href="#" onclick="redo()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Redo</a>
+      <a class="thmb" href="#" onclick="copy()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Copy</a>
+      <a class="thmb" href="#" onclick="paste()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Paste</a>
+      <a class="thmb" href="#" onclick="duplicate()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Duplicate</a>
+      <a class="thmb" href="#" onclick="remove()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Delete</a>
+      <a class="thmb" href="#" onclick="clearcan()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Clear</a><br><br>
+      
+      <a class="thmb" href="#" onclick="ungroup()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Ungroup</a>
+      <a class="thmb" href="#" onclick="flipH()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Flip H</a>
+      <a class="thmb" href="#" onclick="flipV()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Flip V</a>
+      <a class="thmb" href="#" onclick="rotateCW()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Rotate CW</a>
+      <a class="thmb" href="#" onclick="rotateCCW()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Rotate CCW</a><br><br>
+        
+      <a class="thmb" href="#" onclick="alignLeft()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Align Left</a>
+      <a class="thmb" href="#" onclick="alignCenter()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Align Center</a>
+      <a class="thmb" href="#" onclick="alignRight()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Align Right</a><br><br>
+      <a class="thmb" href="#" onclick="alignTop()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Align Top</a>
+      <a class="thmb" href="#" onclick="alignMiddle()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Align Middle</a>
+      <a class="thmb" href="#" onclick="alignBottom()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Align Bottom</a><br><br>
+        
+      <a class="thmb" href="#" onclick="sendBackwards()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Send Backwards</a>
+      <a class="thmb" href="#" onclick="sendToBack()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Send To Back</a>
+      <a class="thmb" href="#" onclick="bringForward()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Bring Forward</a>
+      <a class="thmb" href="#" onclick="bringToFront()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Bring To Front</a>
+      <a class="thmb" href="#" onclick="exportPNG()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Save PNG</a>
+      <a class="thmb" href="#" onclick="exportSVG()" style="padding: 0px 10px;margin:5px;border: 2px solid;">Save SVG</a><br><br>
+        <div class="canvas-container">
+          <canvas id="canvas" style="border: 1px solid #000;"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>
