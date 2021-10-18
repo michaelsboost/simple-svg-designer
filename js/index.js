@@ -190,49 +190,47 @@ function createGrid() {
 })();
 
 // undo redo commandhistory
-canvas.counter = 0;
-var newleft = 0;
+var lockHistory = false;
+var undo_history = [];
+var redo_history = [];
+undo_history.push(JSON.stringify(canvas));
 
-var state = [];
-var mods = 0;
-canvas.on(
-    'object:modified', function () {
-    updateModifications(true);
-},
-    'object:added', function () {
-    updateModifications(true);
-}
-);
+canvas.on("object:added", function () {
+  if (lockHistory) return;
+//  console.log("object:added");
+  undo_history.push(JSON.stringify(canvas));
+  redo_history.length = 0;
+//  console.log(undo_history.length);
+});
+canvas.on("object:modified", function () {
+  if (lockHistory) return;
+//  console.log("object:modified");
+  undo_history.push(JSON.stringify(canvas));
+  redo_history.length = 0;
+//  console.log(undo_history.length);
+});
 
-function updateModifications(savehistory) {
-    if (savehistory === true) {
-        myjson = JSON.stringify(canvas);
-        state.push(myjson);
-    }
+function undo() {
+  if (undo_history.length > 0) {
+    lockHistory = true;
+    if (undo_history.length > 1) redo_history.push(undo_history.pop());
+    var content = undo_history[undo_history.length - 1];
+    canvas.loadFromJSON(content, function () {
+      canvas.renderAll();
+      lockHistory = false;
+    });
+  }
 }
-
-undo = function undo() {
-    if (mods < state.length) {
-        canvas.clear().renderAll();
-        canvas.loadFromJSON(state[state.length - 1 - mods - 1]);
-        canvas.renderAll();
-        //console.log("geladen " + (state.length-1-mods-1));
-        //console.log("state " + state.length);
-        mods += 1;
-        console.log("undo: mod " + mods + " of " + state.length);
-    }
-}
-redo = function redo() {
-    if (mods > 0) {
-        canvas.clear().renderAll();
-        canvas.loadFromJSON(state[state.length - 1 - mods + 1]);
-        canvas.renderAll();
-        //console.log("geladen " + (state.length-1-mods+1));
-        mods -= 1;
-        //console.log("state " + state.length);
-        //console.log("mods " + mods);
-        console.log("redo: mod " + mods + " of " + state.length);
-    }
+function redo() {
+  if (redo_history.length > 0) {
+    lockHistory = true;
+    var content = redo_history.pop();
+    undo_history.push(content);
+    canvas.loadFromJSON(content, function () {
+      canvas.renderAll();
+      lockHistory = false;
+    });
+  }
 }
 clearcan = function clearcan() {
     canvas.clear().renderAll();
